@@ -116,25 +116,12 @@ public class Solution {
   
   public static void main(String[] args) {
    FastReader fs = new FastReader();
-   int R = fs.nextInt();
-   int C = fs.nextInt();
-   char[][] cArr = new char[R][C];
-   for(int r=0;r<R;r++) {
-      cArr[r]  = fs.nextLine().toCharArray();
+   int tot = 0;
+   int n = fs.nextInt();
+   for (int i = 0; i < n; i++) {
+      tot+=fs.nextInt();
    }
-   boolean isBlack = true;
-   for(int r=0;r<R;r++) {
-      if(r%2==0) isBlack = true;
-      else isBlack = false;
-      for(int c = 0;c<C;c++) {
-         if(cArr[r][c] == '.') {
-            if(isBlack) cArr[r][c] = 'B';
-            else cArr[r][c] = 'W';
-         }
-         isBlack = !isBlack;
-      }
-      char[] curr = cArr[r];
-      System.out.println(String.valueOf(curr));
-   }
+   if(tot%n==0) System.out.println(n);
+   else System.out.println(n-1);
   }
 }
