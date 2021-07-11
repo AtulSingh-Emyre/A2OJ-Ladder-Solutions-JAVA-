@@ -116,40 +116,25 @@ public class Solution {
   
   public static void main(String[] args) {
    FastReader fs = new FastReader();
-   int t = fs.nextInt();
-   Map<Integer,List<Integer>> comY = new HashMap<>();
-   Map<Integer,List<Integer>> comX = new HashMap<>();
-   Set<String> res = new HashSet<>();
-   while(t-->0) {
-      int currX = fs.nextInt();
-      int currY = fs.nextInt();
-      comY.putIfAbsent(currY, new ArrayList<>());
-      comX.putIfAbsent(currX, new ArrayList<>());
-      comY.get(currY).add(currX);
-      comX.get(currX).add(currY);
-   }   
-   // now we look for the super central points:
-   for (Map.Entry<Integer, List<Integer>> set : comY.entrySet()) {
-      int y = set.getKey();
-      List<Integer> arrX = set.getValue();
-      if(arrX.size()<3) continue;
-      Collections.sort(arrX);
-      for(int i=1;i<arrX.size()-1;i++) {
-         int currX = arrX.get(i);
-         res.add(currX+" "+y);
-      }
+   int R = fs.nextInt();
+   int C = fs.nextInt();
+   char[][] cArr = new char[R][C];
+   for(int r=0;r<R;r++) {
+      cArr[r]  = fs.nextLine().toCharArray();
    }
-   int count = 0;
-   for (Map.Entry<Integer, List<Integer>> set : comX.entrySet()) {
-      int x = set.getKey();
-      List<Integer> arrY = set.getValue();
-      if(arrY.size()<3) continue;
-      Collections.sort(arrY);
-      for(int i=1;i<arrY.size()-1;i++) {
-         int currY = arrY.get(i);
-         if(res.contains(x+" "+currY)) count++;
+   boolean isBlack = true;
+   for(int r=0;r<R;r++) {
+      if(r%2==0) isBlack = true;
+      else isBlack = false;
+      for(int c = 0;c<C;c++) {
+         if(cArr[r][c] == '.') {
+            if(isBlack) cArr[r][c] = 'B';
+            else cArr[r][c] = 'W';
+         }
+         isBlack = !isBlack;
       }
+      char[] curr = cArr[r];
+      System.out.println(String.valueOf(curr));
    }
-   System.out.println(count);
   }
 }
