@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 // import java.math.BigDecimal;
 import java.util.*;
-
 public class Solution {
    static class Algebra {
       public static int GCD(int a, int b) {
@@ -73,7 +72,31 @@ public class Solution {
      while(i>0) res*=i--;
      return res;
   }
-  public static void main(String[] args) {
-   FastReader fs = new FastReader();
+  static int[] dp;
+  static int helper(int n, int k) {
+     if(k==1) {
+      dp[k] = 1;  
+      return 1;
+   }
+     if(dp[k]!=-1) return dp[k];
+     int res = 0;
+     for(int i=1;i<7;i++) {
+         if(k-i>=0) res+=dp[k-i];   
+     }
+     dp[k] = res;
+     return res;
   }
+  public static void main(String[] args) {
+      FastReader fs = new FastReader();
+      int n = fs.nextInt();
+      dp = new int[n+1];
+      dp[0] = 1;
+      for(int i=1;i<=n;i++) dp[i] = -1;
+      int res = 0;
+      for(int i=1;i<=n;i++) {
+         res = helper(n,i);
+         System.out.println(i+" "+res);
+      }
+      System.out.println(res);
+   }
 }
