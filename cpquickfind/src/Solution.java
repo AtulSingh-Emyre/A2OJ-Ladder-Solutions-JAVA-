@@ -72,31 +72,23 @@ public class Solution {
      while(i>0) res*=i--;
      return res;
   }
-  static int[] dp;
-  static int helper(int n, int k) {
-     if(k==1) {
-      dp[k] = 1;  
-      return 1;
-   }
-     if(dp[k]!=-1) return dp[k];
-     int res = 0;
-     for(int i=1;i<7;i++) {
-         if(k-i>=0) res+=dp[k-i];   
-     }
-     dp[k] = res;
-     return res;
-  }
+  
   public static void main(String[] args) {
       FastReader fs = new FastReader();
       int n = fs.nextInt();
-      dp = new int[n+1];
-      dp[0] = 1;
-      for(int i=1;i<=n;i++) dp[i] = -1;
-      int res = 0;
-      for(int i=1;i<=n;i++) {
-         res = helper(n,i);
-         System.out.println(i+" "+res);
+      int tar = fs.nextInt();
+      int[] coins = new int[n];
+      for(int i=0;i<n;i++){
+         coins[i] = fs.nextInt();
+      } 
+      int[] dp = new int[tar+1];
+      for(int i=1;i<=tar;i++) {
+         int res = Integer.MAX_VALUE;
+         for(int c: coins) {
+            if(i-c>=0) res = Math.min(res,dp[i-c]+1);
+         }
+         dp[i] = res;
       }
-      System.out.println(res);
+      System.out.println(dp[tar]);
    }
 }
