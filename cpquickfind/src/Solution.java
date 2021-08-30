@@ -72,7 +72,6 @@ public class Solution {
      while(i>0) res*=i--;
      return res;
   }
-  
   public static void main(String[] args) {
       FastReader fs = new FastReader();
       int n = fs.nextInt();
@@ -82,13 +81,16 @@ public class Solution {
          coins[i] = fs.nextInt();
       } 
       int[] dp = new int[tar+1];
+      dp[0] = 1;
       for(int i=1;i<=tar;i++) {
-         int res = Integer.MAX_VALUE;
+         int res = 0;
+
          for(int c: coins) {
-            if(i-c>=0) res = Math.min(res,dp[i-c]+1);
+            if(i-c>=0) res += dp[i-c];
          }
+         
          dp[i] = res;
       }
-      System.out.println(dp[tar]);
+      System.out.println(Arrays.toString(dp));
    }
 }
