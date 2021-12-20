@@ -72,25 +72,38 @@ public class Solution {
      while(i>0) res*=i--;
      return res;
   }
-  public static void main(String[] args) {
-      FastReader fs = new FastReader();
-      int n = fs.nextInt();
-      int tar = fs.nextInt();
-      int[] coins = new int[n];
-      for(int i=0;i<n;i++){
-         coins[i] = fs.nextInt();
-      } 
-      int[] dp = new int[tar+1];
-      dp[0] = 1;
-      for(int i=1;i<=tar;i++) {
-         int res = 0;
-
-         for(int c: coins) {
-            if(i-c>=0) res += dp[i-c];
+  static int[][] dp;
+    public static int solve(int a, int b) {
+        if(a == b) return 0;
+        int l = Math.max(a, b);
+        int w = Math.min(a, b);
+        if(dp[l][w]!=-1) return dp[l][w];
+        return dp[l][w] = 1 + solve(l-w, w);
+    }
+    public static void main(String[] args) {
+        FastReader fs = new FastReader();
+        int a = fs.nextInt();
+        int b = fs.nextInt();
+        int l = Math.max(a, b);
+      //   int w = Math.min(a, b);
+        dp = new int[l+1][l+1];
+        Arrays.stream(dp).forEach(ar -> Arrays.fill(ar,-1));
+        for(int i=0;i<=a;i++) for(int j=0;j<=b;j++) {
+         if(dp[i][j]!=-1) continue;
+         if(i==0 || j==0 || i==j) dp[i][j] = 0;
+         else {
+            int res = Integer.MAX_VALUE;
+            for(int i1 = 1;i1<i;i1++) {
+               res = Math.min(dp[i1][j]+dp[i-i1][j]+1,res);
+            }
+            for(int j1 = 1;j1<j;j1++){
+               res = Math.min(dp[i][j1]+dp[i][j-j1]+1,res);
+            }
+            dp[i][j] = dp[j][i] = res;
          }
-         
-         dp[i] = res;
-      }
-      System.out.println(Arrays.toString(dp));
-   }
+        }
+      //   Arrays.stream(dp).forEach(ar -> System.out.println(Arrays.toString(ar)));
+
+        System.out.println(dp[a][b]);
+    }
 }
